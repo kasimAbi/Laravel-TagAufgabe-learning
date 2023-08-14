@@ -20,7 +20,7 @@
                         <x-table.cell>{{ $user->id }}</x-table.cell>
                         <x-table.cell>{{ $user->name }}</x-table.cell>
                         <x-table.cell>{{ $user->email }}</x-table.cell>
-                        <x-table.cell wire:model="addTag">Add Tag</x-table.cell>
+                        <x-table.cell><button wire:click="addTag">Add Tag</button></x-table.cell>
                     </x-table.row>
 
                     @empty
@@ -37,4 +37,12 @@
 
         {{ $users->Links() }}
     </div>
+
+    <x-modal.dialog wire:model="showAddTagModal">
+        <x-slot name="title">Tag hinzufügen</x-slot>
+
+        <x-slot name="content">Test</x-slot>
+
+        <x-slot name="footer">Hallo</x-slot>
+    </x-modal.dialog>
 </div>

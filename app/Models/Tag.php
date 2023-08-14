@@ -10,6 +10,7 @@ class Tag extends Model
     // protected $table = "tags";
     use HasFactory;
 
+    public $timestamps = false;
     protected $fillable = [
         'name',
     ];
