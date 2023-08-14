@@ -26,3 +26,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('/tags', [App\Http\Livewire\Tags::class, 'render'])->name('tags');
