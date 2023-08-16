@@ -46,8 +46,10 @@ class Table extends Component
         );
     }
 
-    public function addTag(){
+    public function addTag($userId){
         $this->showAddTagModal = true;
+        $this->selectedUser = User::find($userId);
+        $this->selectedTag = null;
     }
 
     public function confirmAddTag()

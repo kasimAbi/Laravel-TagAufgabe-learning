@@ -11,7 +11,9 @@
                     <x-table.row  wire:loading.class="opacity-50">
                         <x-table.cell>{{ $tag->name }}</x-table.cell>
                         <x-table.cell>
-                            {{ Illuminate\Support\Arr::join($tag->users->toArray(), ', ') }}
+                            @if(isset($tag->users))
+                                {{ Illuminate\Support\Arr::join($tag->users->toArray(), ', ') }}
+                            @endif
                         </x-table.cell>
                     </x-table.row>
                 @endforeach
