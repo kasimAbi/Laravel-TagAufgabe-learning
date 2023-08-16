@@ -11,8 +11,9 @@
                     <x-table.row  wire:loading.class="opacity-50">
                         <x-table.cell>{{ $tag->name }}</x-table.cell>
                         <x-table.cell>
-                            @if(isset($tag->users))
-                                {{ Illuminate\Support\Arr::join($tag->users->toArray(), ', ') }}
+
+                            @if(count($tag->users) > 0)
+                                {{ Illuminate\Support\Arr::join($tag->users->pluck('name')->toArray(), ', ', ' und ') }}
                             @endif
                         </x-table.cell>
                     </x-table.row>

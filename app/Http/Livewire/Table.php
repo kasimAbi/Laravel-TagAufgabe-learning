@@ -15,8 +15,6 @@ class Table extends Component
 
     public $showAddTagModal = false;
 
-    public $selectedTagName = "Show Tags...";
-
     public $selectedTag;
 
     public $selectedUser;
@@ -30,26 +28,11 @@ class Table extends Component
         return Tag::all();
     }
 
-    public function render()
+
+    public function addTag($user_id): void
     {
-
-        $users = User::query()
-            ->when($this->searchbar, function($query){
-                return $query->where("name", "like", '%' . $this->searchbar . '%');
-            });
-
-        #dd($this->users);
-        return view('livewire.table',
-            [
-                'users' => $users->paginate(10),
-            ]
-        );
-    }
-
-    public function addTag($userId){
         $this->showAddTagModal = true;
-        $this->selectedUser = User::find($userId);
-        $this->selectedTag = null;
+        $this->selectedUser = User::findOrFail($user_id);
     }
 
     public function confirmAddTag()
@@ -70,15 +53,30 @@ class Table extends Component
     }
 
     public function updateSelectedTag($tagId){
-        $tag = Tag::find($tagId);
-        if ($tag) {
-            $this->selectedTag = $tag;
-            $this->selectedTagName = $tag->name;
-        }
+        $tag = Tag::findOrFail($tagId);
+        $this->selectedTag = $tag;
+
     }
 
     // refresh lädt die Produkte aus der Datenbank neu herunter
     public function refresh(){
         $this->users = User::all();
     }
+
+    public function render()
+    {
+
+        $users = User::query()
+            ->when($this->searchbar, function($query){
+                return $query->where("name", "like", '%' . $this->searchbar . '%');
+            });
+
+        #dd($this->users);
+        return view('livewire.table',
+            [
+                'users' => $users->paginate(10),
+            ]
+        );
+    }
+
 }

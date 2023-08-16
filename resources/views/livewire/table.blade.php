@@ -45,7 +45,7 @@
         <x-slot name="content">
             <x-dropdown>
                 <x-slot name="trigger">
-                    <button class="right-0 border-gray-200 border-2 p-2">{{ $selectedTagName }}</button>
+                    <button class="right-0 border-gray-200 border-2 p-2">{{ $selectedTag->name ?? "Select Tag" }}</button>
                 </x-slot>
 
                 <x-slot name="content">
