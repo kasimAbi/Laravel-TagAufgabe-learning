@@ -20,7 +20,7 @@
                         <x-table.cell>{{ $user->id }}</x-table.cell>
                         <x-table.cell>{{ $user->name }}</x-table.cell>
                         <x-table.cell>{{ $user->email }}</x-table.cell>
-                        <x-table.cell><button wire:click="addTag">Add Tag</button></x-table.cell>
+                        <x-table.cell><button wire:click="addTag('{{ $user->id }}')">Add Tag</button></x-table.cell>
                     </x-table.row>
 
                     @empty
@@ -38,11 +38,31 @@
         {{ $users->Links() }}
     </div>
 
-    <x-modal.dialog wire:model="showAddTagModal">
+    <!-- Dialogfenster öffnet: modal/dialog -> modal. .defer sorgt für weniger Abfragen. -->
+    <x-modal.dialog wire:model.defer="showAddTagModal">
         <x-slot name="title">Tag hinzufügen</x-slot>
 
-        <x-slot name="content">Test</x-slot>
+        <x-slot name="content">
+            <x-dropdown>
+                <x-slot name="trigger">
+                    <button class="right-0 border-gray-200 border-2 p-2">{{ $selectedTagName }}</button>
+                </x-slot>
 
-        <x-slot name="footer">Hallo</x-slot>
+                <x-slot name="content">
+                    <ul class="scroll-auto scroll-m-0">
+                        @foreach ($this->tags as $tag)
+                            <li><button wire:click="updateSelectedTag('{{$tag->id}}')">{{ $tag->name }}</button></li>
+                        @endforeach
+                    </ul>
+                </x-slot>
+
+
+            </x-dropdown>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-button class="bg-blue-500 hover:bg-blue-600">Zurück</x-button>
+            <x-button wire:click="confirmAddTag()">Hinzufügen</x-button>
+        </x-slot>
     </x-modal.dialog>
 </div>
