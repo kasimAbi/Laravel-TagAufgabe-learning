@@ -55,8 +55,6 @@
                         @endforeach
                     </ul>
                 </x-slot>
-
-
             </x-dropdown>
         </x-slot>
 

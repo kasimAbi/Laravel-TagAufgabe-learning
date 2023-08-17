@@ -13,11 +13,11 @@ class Table extends Component
 
     public $searchbar = "";
 
-    public $showAddTagModal = false;
-
     public $selectedTag;
 
     public $selectedUser;
+
+    public $showAddTagModal = false;
 
     public function mount() {
 
