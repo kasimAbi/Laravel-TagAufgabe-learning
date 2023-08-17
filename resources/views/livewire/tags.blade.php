@@ -10,7 +10,7 @@
                 <x-slot name="body">
                     @foreach($tags as $tag)
                         <x-table.row  wire:loading.class="opacity-50">
-                            <x-table.cell wire:click="addUserToTag('{{ $tag->name }}')">{{ $tag->name }}</x-table.cell>
+                            <x-table.cell wire:click="addUserToTag('{{ $tag->id }}')">{{ $tag->name }}</x-table.cell>
                             <x-table.cell>
                                 @if(isset($tag->users))
                                     {{ Illuminate\Support\Arr::join($tag->users->pluck("name")->toArray(), ', ') }}
@@ -25,27 +25,20 @@
         </div>
 
         <!-- Dialogfenster öffnet: modal/dialog -> modal. .defer sorgt für weniger Abfragen. -->
-        <x-modal.dialog wire:model.defer="showAddUserModal">
+        <x-modal.dialog wire:model.defer="showAddUserModal" class="h-full">
             <x-slot name="title">Einen User dem Tag hinzufügen</x-slot>
 
             <x-slot name="content">
-                <x-dropdown>
-                    <x-slot name="trigger">
-                        <button class="right-0 border-gray-200 border-2 p-2">{{ $selectedUser->name ?? "Select a User" }}</button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <ul class="scroll-auto scroll-m-0">
-                            @foreach ($this->users as $user)
-                                <li><button wire:click="updateSelectedUser('{{ $user->name }}')">{{ $user->name }}</button></li>
-                            @endforeach
-                        </ul>
-                    </x-slot>
-                </x-dropdown>
+                <select wire:model="selectedUserId" wire:change="updateSelectedUser()">
+                    <option value="">User wählen</option>
+                    @foreach ($this->users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
             </x-slot>
 
             <x-slot name="footer">
-                <x-button class="bg-blue-500 hover:bg-blue-600">Zurück</x-button>
+                <x-button wire:click="cancel()" class="bg-blue-500 hover:bg-blue-600">Zurück</x-button>
                 <x-button wire:click="confirmAddUser()">Hinzufügen</x-button>
             </x-slot>
         </x-modal.dialog>

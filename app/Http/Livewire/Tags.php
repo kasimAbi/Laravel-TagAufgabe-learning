@@ -16,16 +16,12 @@ class Tags extends Component
 
     public $selectedTag;
 
+    public $selectedUserId;
+
     public $showAddUserModal = false;
 
     public function mount() {
 
-    }
-
-
-    public function getTestProperty()
-    {
-        return User::all();
     }
 
     public function getUsersProperty()
@@ -33,23 +29,37 @@ class Tags extends Component
         return User::all();
     }
 
-    public function addUserToTag($tagName): void{
+    public function addUserToTag($tagId): void{
         $this->showAddUserModal = true;
-        $this->selectedTag = Tag::findOrFail($tagName);
+        $this->selectedTag = Tag::findOrFail($tagId);
     }
 
     public function confirmAddUser()
     {
         if(isset($this->selectedUser)){
-            $this->selectedTag->tags()->attach(
-                $this->selectedUser
+            $this->selectedUser->tags()->attach(
+                $this->selectedTag
             );
+        }
+        $this->showAddUserModal = false;
+    }
+
+    /* public function updateSelectedUser($userId){
+        $user = User::findOrFail($userId);
+        $this->selectedUser = $user;
+    } */
+
+    public function updateSelectedUser(){
+        if($this->selectedUserId != ""){
+            $user = User::findOrFail($this->selectedUserId);
+            $this->selectedUser = $user;
+        }else{
+            $this->selectedUser = null;
         }
     }
 
-    public function updateSelectedUser($userId){
-        $user = User::findOrFail($userId);
-        $this->selectedUser = $user;
+    public function cancel(){
+        $this->showAddUserModal = false;
     }
 
     public function render()

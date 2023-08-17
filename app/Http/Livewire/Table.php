@@ -63,6 +63,10 @@ class Table extends Component
         $this->users = User::all();
     }
 
+    public function cancel(){
+        $this->showAddTagModal = false;
+    }
+
     public function render()
     {
 

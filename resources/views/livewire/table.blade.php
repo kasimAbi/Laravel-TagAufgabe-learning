@@ -48,10 +48,10 @@
                     <button class="right-0 border-gray-200 border-2 p-2">{{ $selectedTag->name ?? "Select Tag" }}</button>
                 </x-slot>
 
-                <x-slot name="content">
+                <x-slot name="content" class="dropdown-content">
                     <ul class="scroll-auto scroll-m-0">
                         @foreach ($this->tags as $tag)
-                            <li><button wire:click="updateSelectedTag('{{$tag->id}}')">{{ $tag->name }}</button></li>
+                            <li><button wire:click="updateSelectedTag('{{ $tag->id }}')">{{ $tag->name }}</button></li>
                         @endforeach
                     </ul>
                 </x-slot>
@@ -59,7 +59,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-button class="bg-blue-500 hover:bg-blue-600">Zurück</x-button>
+            <x-button wire:click="cancel()" class="bg-blue-500 hover:bg-blue-600">Zurück</x-button>
             <x-button wire:click="confirmAddTag()">Hinzufügen</x-button>
         </x-slot>
     </x-modal.dialog>

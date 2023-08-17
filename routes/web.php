@@ -27,6 +27,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/tags', function() {
-    return view('tags');
-})->name('tags');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/tags', function() {
+        return view('tags');
+    })->name('tags');
+});
