@@ -1,4 +1,4 @@
-<x-app-layout>
+<div>
     <div style="padding: 50px;" class="w-full">
         <div class="py-4 space-y-5">
             <x-table>
@@ -50,4 +50,4 @@
             </x-slot>
         </x-modal.dialog>
     </div>
-</x-app-layout>
+</div>

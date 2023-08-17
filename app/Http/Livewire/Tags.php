@@ -22,6 +22,12 @@ class Tags extends Component
 
     }
 
+
+    public function getTestProperty()
+    {
+        return User::all();
+    }
+
     public function getUsersProperty()
     {
         return User::all();
@@ -54,7 +60,6 @@ class Tags extends Component
 
         return view('livewire.tags', [
             'tags' => Tag::paginate(5),
-            "users" => User::all(),
         ]);
     }
 }
