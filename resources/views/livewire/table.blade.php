@@ -1,4 +1,11 @@
 <div style="padding: 50px;">
+    <!-- Wenn etwas erfolgreich hinzugefügt wurde, wird die Nachricht mit dem Key "success" angezeigt -->
+    @if(isset($message["success"]))
+        <div class="alert alert-success pb-10">
+            {{ $message["success"] }}
+        </div>
+    @endif
+
     <div>
         <div class="w-1/4">
             <x-input.text placeholder="Search..." wire:model="searchbar" />
@@ -43,19 +50,12 @@
         <x-slot name="title">Tag hinzufügen</x-slot>
 
         <x-slot name="content">
-            <x-dropdown>
-                <x-slot name="trigger">
-                    <button class="right-0 border-gray-200 border-2 p-2">{{ $selectedTag->name ?? "Select Tag" }}</button>
-                </x-slot>
-
-                <x-slot name="content" class="dropdown-content">
-                    <ul class="scroll-auto scroll-m-0">
-                        @foreach ($this->tags as $tag)
-                            <li><button wire:click="updateSelectedTag('{{ $tag->id }}')">{{ $tag->name }}</button></li>
-                        @endforeach
-                    </ul>
-                </x-slot>
-            </x-dropdown>
+            <select wire:model="selectedTagId" wire:change="updateSelectedTag()">
+                <option value="">User wählen</option>
+                @foreach ($this->tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                @endforeach
+            </select>
         </x-slot>
 
         <x-slot name="footer">

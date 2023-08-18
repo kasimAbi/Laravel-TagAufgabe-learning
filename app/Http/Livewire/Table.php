@@ -17,7 +17,11 @@ class Table extends Component
 
     public $selectedUser;
 
+    public $selectedTagId;
+
     public $showAddTagModal = false;
+
+    public $message = [];
 
     public function mount() {
 
@@ -37,25 +41,30 @@ class Table extends Component
 
     public function confirmAddTag()
     {
-        /*
-        $this->selectedUser->tags()->create([
-            "taggable_id" => $this->selectedTag,
-        ]);
-        */
-
-        //$this->selectedUser->tags();
-
         if(isset($this->selectedTag)){
             $this->selectedUser->tags()->attach(
                 $this->selectedTag
             );
+            $this->message["success"] = "Tag wurde dem User erfolgreich hinzugefügt.";
         }
+        $this->selectedUser = null;
+        $this->selectedTag = null;
+        $this->showAddTagModal = false;
     }
 
-    public function updateSelectedTag($tagId){
+    /* public function updateSelectedTag($tagId){
         $tag = Tag::findOrFail($tagId);
         $this->selectedTag = $tag;
+    } */
 
+    public function updateSelectedTag(){
+        // Hier unsicher ob man das so macht
+        if($this->selectedTagId != ""){
+            $tag = User::findOrFail($this->selectedTagId);
+            $this->selectedTag = $tag;
+        }else{
+            $this->selectedTag = null;
+        }
     }
 
     // refresh lädt die Produkte aus der Datenbank neu herunter

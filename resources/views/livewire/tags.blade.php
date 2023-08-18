@@ -1,5 +1,12 @@
 <div>
     <div style="padding: 50px;" class="w-full">
+        <!-- Wenn etwas erfolgreich hinzugefügt wurde, wird die Nachricht mit dem Key "success" angezeigt -->
+        @if(isset($message["success"]))
+            <div class="alert alert-success pb-10">
+                {{ $message["success"] }}
+            </div>
+        @endif
+
         <div class="py-4 space-y-5">
             <x-table>
                 <x-slot name="head">

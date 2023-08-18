@@ -20,6 +20,8 @@ class Tags extends Component
 
     public $showAddUserModal = false;
 
+    public $message = [];
+
     public function mount() {
 
     }
@@ -29,27 +31,25 @@ class Tags extends Component
         return User::all();
     }
 
-    public function addUserToTag($tagId): void{
+    public function addUserToTag($tagId): void {
         $this->showAddUserModal = true;
         $this->selectedTag = Tag::findOrFail($tagId);
     }
 
-    public function confirmAddUser()
-    {
+    public function confirmAddUser(): void {
         if(isset($this->selectedUser)){
             $this->selectedUser->tags()->attach(
                 $this->selectedTag
             );
+            $this->message["success"] = "User wurde dem Tag erfolgreich hinzugefügt.";
         }
+        $this->selectedUser = null;
+        $this->selectedTag = null;
         $this->showAddUserModal = false;
     }
 
-    /* public function updateSelectedUser($userId){
-        $user = User::findOrFail($userId);
-        $this->selectedUser = $user;
-    } */
-
-    public function updateSelectedUser(){
+    public function updateSelectedUser(): void {
+        // Hier unsicher ob man das so macht
         if($this->selectedUserId != ""){
             $user = User::findOrFail($this->selectedUserId);
             $this->selectedUser = $user;
@@ -58,7 +58,7 @@ class Tags extends Component
         }
     }
 
-    public function cancel(){
+    public function cancel(): void {
         $this->showAddUserModal = false;
     }
 
