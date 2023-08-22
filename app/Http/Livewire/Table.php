@@ -13,8 +13,6 @@ class Table extends Component
 
     public $searchbar = "";
 
-    public $selectedTag;
-
     public $selectedUser;
 
     public $selectedTagId;
@@ -38,17 +36,20 @@ class Table extends Component
         $this->showAddTagModal = true;
         $this->selectedUser = User::findOrFail($user_id);
     }
-
+    
     public function confirmAddTag()
     {
-        if(isset($this->selectedTag)){
-            $this->selectedUser->tags()->attach(
-                $this->selectedTag
-            );
-            $this->message["success"] = "Tag wurde dem User erfolgreich hinzugefügt.";
-        }
+//        $user = User::firstOrFail($this->selectedUser);
+
+
+        $this->selectedUser->tags()->attach(
+            $this->selectedTagId
+        );
+        $this->message["success"] = "Tag wurde dem User erfolgreich hinzugefügt.";
+
+
         $this->selectedUser = null;
-        $this->selectedTag = null;
+        $this->selectedTagId = null;
         $this->showAddTagModal = false;
     }
 
@@ -57,15 +58,15 @@ class Table extends Component
         $this->selectedTag = $tag;
     } */
 
-    public function updateSelectedTag(){
-        // Hier unsicher ob man das so macht
-        if($this->selectedTagId != ""){
-            $tag = User::findOrFail($this->selectedTagId);
-            $this->selectedTag = $tag;
-        }else{
-            $this->selectedTag = null;
-        }
-    }
+//    public function updateSelectedTag(){
+//        // Hier unsicher ob man das so macht
+//        if($this->selectedTagId != ""){
+//            $tag = User::findOrFail($this->selectedTagId);
+//            $this->selectedTag = $tag;
+//        }else{
+//            $this->selectedTag = null;
+//        }
+//    }
 
     // refresh lädt die Produkte aus der Datenbank neu herunter
     public function refresh(){

@@ -50,8 +50,8 @@
         <x-slot name="title">Tag hinzufügen</x-slot>
 
         <x-slot name="content">
-            <select wire:model="selectedTagId" wire:change="updateSelectedTag()">
-                <option value="">User wählen</option>
+            <select wire:model="selectedTagId">
+                <option value="">Tag wählen</option>
                 @foreach ($this->tags as $tag)
                     <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                 @endforeach

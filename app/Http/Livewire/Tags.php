@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use App\Models\Tag;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -26,7 +28,7 @@ class Tags extends Component
 
     }
 
-    public function getUsersProperty()
+    public function getUsersProperty(): Collection
     {
         return User::all();
     }
@@ -62,7 +64,7 @@ class Tags extends Component
         $this->showAddUserModal = false;
     }
 
-    public function render()
+    public function render(): View
     {
         //$tags = Tag::all();
 
