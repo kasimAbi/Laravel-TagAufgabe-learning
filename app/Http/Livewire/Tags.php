@@ -22,6 +22,12 @@ class Tags extends Component
 
     public $showAddUserModal = false;
 
+    public $showAddTagModal = false;
+
+    public $name = "";
+
+    protected $rules = ["name" => "required"];
+
     public $message = [];
 
     public function mount() {
@@ -38,30 +44,43 @@ class Tags extends Component
         $this->selectedTag = Tag::findOrFail($tagId);
     }
 
+    public function cancel(): void {
+        $this->showAddUserModal = false;
+    }
+
     public function confirmAddUser(): void {
-        if(isset($this->selectedUser)){
+        if($this->selectedUserId != ""){
+            $user = User::findOrFail($this->selectedUserId);
+            $this->selectedUser = $user;
             $this->selectedUser->tags()->attach(
                 $this->selectedTag
             );
             $this->message["success"] = "User wurde dem Tag erfolgreich hinzugefügt.";
+        }else{
+            $this->selectedUser = null;
         }
         $this->selectedUser = null;
         $this->selectedTag = null;
         $this->showAddUserModal = false;
     }
 
-    public function updateSelectedUser(): void {
-        // Hier unsicher ob man das so macht
-        if($this->selectedUserId != ""){
-            $user = User::findOrFail($this->selectedUserId);
-            $this->selectedUser = $user;
-        }else{
-            $this->selectedUser = null;
-        }
+    public function addTag(): void {
+        $this->showAddTagModal = true;
     }
 
-    public function cancel(): void {
-        $this->showAddUserModal = false;
+    public function cancelAddTag(): void {
+        $this->showAddTagModal = false;
+    }
+
+    public function confirmAddTag(): void {
+        $validatedData = $this->validate();
+
+        Tag::create($validatedData);
+
+        $this->message["success"] = "Tag wurde der Datenbank hinzugefügt.";
+        $this->name = "";
+        $this->addTagName = null;
+        $this->showAddTagModal = false;
     }
 
     public function render(): View
