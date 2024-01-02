@@ -6,10 +6,8 @@
         </div>
     @endif
 
-    <div>
-        <div class="w-1/4">
-            <x-input.text placeholder="Search..." wire:model="searchbar" />
-        </div>
+    <div class="w-1/4">
+        <x-input.text placeholder="Search..." wire:model="searchbar" />
     </div>
 
     <div class="py-4 space-y-5">
