@@ -85,10 +85,6 @@ class Tags extends Component
 
     public function render(): View
     {
-        //$tags = Tag::all();
-
-        //dd($tags->first()->users->toArray());
-
         return view('livewire.tags', [
             'tags' => Tag::paginate(5),
         ]);
